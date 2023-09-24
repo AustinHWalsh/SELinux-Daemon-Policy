@@ -33,11 +33,11 @@ it.
 SELinux labels are applied to all processes and files on systems running SELinux. Labels contain 4 fields:
 1. user
 2. role
-3. type
+3. type/domain
 4. security level
 
-Labels are stored in the form \<user\>:\<role\>:\<type\>:\<security level\> 
-For example, a file stored in the home directory will by default be assigned the label unconfined\_u:object\_r:user\_home\_t:s0 
+Labels are stored in the form `<user>:<role>:<type>:<security level>`
+For example, a file stored in the home directory will by default be assigned the label `unconfined_u:object_r:user_home_t:s0` 
 
 ### SELinux users
 In this section, the distinction between SELinux user and account are important. When talking about an account, it means the user logged into the system. For example,
@@ -57,3 +57,41 @@ Accounts are mapped to a single SELinux user.
 The SELinux users can be found using `semanage user -l`
 
 ### SELinux roles
+SELinux roles dictact which SELinux types are accessible if part of that role. Simply put a SELinux role allows a SELinux user to access a SELinux type.
+SELinux users can be assigned to multiple roles, however, they can only assume a single role at a time and must swap between them to access different types if required.
+
+This diagram depicts how this interacts, accounts are given an SELinux user. SELinux users are assigned SELinux roles. SELinux roles allow access to SELinux types/domains
+![SELinux relationship diagram](https://wiki.gentoo.org/images/a/a0/SELinux_users.png)
+
+The standard set of SELinux roles are:
+* object\_r: Default role for all processes/resources, cannot be assumed by a user
+* user\_r: The regular user role, only allows user applications and other non-privileged types
+* staff\_r: Similar to user\_r, except allows the user to receive more system info and mainly given to users who need to swap roles
+* sysadm\_r: System admin role, allowing access to most types
+* system\_r: System role, not meant to be assumed by a user
+
+### SELinux type
+The SELinux type is the most important field in a label. When SELinux policies determine if a process can access a resource, it is checking if the process's type 
+has access to the resource's type. The other fields in the label are ignored, they are only there to allow processes to define their type.
+
+Types are defined by default, and inherited by newly-created files
+
+For example, in my home directory, it contains the following files and their labels:
+```
+drwx------. 1 fedora fedora unconfined_u:object_r:user_home_dir_t:s0   152 Sep 24 11:21 .
+drwxr-xr-x. 1 root   root   system_u:object_r:home_root_t:s0            12 Sep 19 04:14 ..
+-rw-------. 1 fedora fedora unconfined_u:object_r:user_home_t:s0       692 Sep 24 08:53 .bash_history
+-rw-r--r--. 1 fedora fedora unconfined_u:object_r:user_home_t:s0        18 Feb  6  2023 .bash_logout
+-rw-r--r--. 1 fedora fedora unconfined_u:object_r:user_home_t:s0       141 Feb  6  2023 .bash_profile
+-rw-r--r--. 1 fedora fedora unconfined_u:object_r:user_home_t:s0       524 Sep 24 09:10 .bashrc
+drwxr-xr-x. 1 fedora fedora unconfined_u:object_r:cache_home_t:s0       20 Sep 24 08:46 .cache
+-rw-r--r--. 1 fedora fedora unconfined_u:object_r:user_home_t:s0        60 Sep 24 09:08 .gitconfig
+drwxr-xr-x. 1 fedora fedora unconfined_u:object_r:user_home_t:s0        28 Sep 24 09:04 src
+drwx------. 1 fedora fedora system_u:object_r:ssh_home_t:s0            130 Sep 24 10:42 .ssh
+-rw-------. 1 fedora fedora unconfined_u:object_r:user_home_t:s0     10834 Sep 24 11:20 .viminfo
+``` 
+
+The `user_home_t` type is assigned to all labels for resources created in the home directory, unless otherwise. This also extends to files in subdirectories,
+so any files created in the `src` directory will have the `user_home_t` assigned, but this can be changed.
+The `ssh_home_t` is a type specific for the files hosted in the `~/.ssh/` directory. 
+
