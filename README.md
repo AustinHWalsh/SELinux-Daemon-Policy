@@ -10,7 +10,7 @@ Project ideation and planning
 Begin research into SELinux Policies
 
 ## What is SELinux
-Security Enhanced Linux (SELinux) provides an additional layer of system security. It aims to answer the question: May <subject> do <action> to <object>?
+Security Enhanced Linux (SELinux) provides an additional layer of system security. It aims to answer the question: May \<subject\> do \<action\> to \<object\>?
 For example: May a webserver access files in users' home directories?
 
 SELinux is a Mandatory Access Control (MAC) implementation.
@@ -36,8 +36,8 @@ SELinux labels are applied to all processes and files on systems running SELinux
 3. type
 4. security level
 
-Labels are stored in the form <user>:<role>:<type>:<security level> 
-For example, a file stored in the home directory will by default be assigned the label unconfined_u:object_r:user_home_t:s0 
+Labels are stored in the form \<user\>:\<role\>:\<type\>:\<security level\> 
+For example, a file stored in the home directory will by default be assigned the label unconfined\_u:object\_r:user\_home\_t:s0 
 
 ### SELinux users
 In this section, the distinction between SELinux user and account are important. When talking about an account, it means the user logged into the system. For example,
@@ -46,12 +46,12 @@ by default on Fedora, *fedora* is the account. When executing a command with `su
 A SELinux user is an immutable field of the label used to audit and control access of the current account of the system. 
 There exists multiple SELinux users:
 
-* unconfined_u: SELinux user for unrestricted users. They have very few restrictions in applied to their user and is the default if an account is not mapped to a user. 
+* unconfined\_u: SELinux user for unrestricted users. They have very few restrictions in applied to their user and is the default if an account is not mapped to a user. 
 * root: The SELinux user for the root account
-* sysadm_u: SELinux user with direct system admin role assigned
-* staff_u: SELinux user for accounts that need to run both non-admin and admin commands. This is done through the staff_r and sysadm_r roles.
-* user_u: SELinux user for non-admin accounts
-* system_u: Special SELinux user for system services. It is not possible to directly use this user.
+* sysadm\_u: SELinux user with direct system admin role assigned
+* staff\_u: SELinux user for accounts that need to run both non-admin and admin commands. This is done through the staff\_r and sysadm\_r roles.
+* user\_u: SELinux user for non-admin accounts
+* system\_u: Special SELinux user for system services. It is not possible to directly use this user.
 
 Accounts are mapped to a single SELinux user.
 The SELinux users can be found using `semanage user -l`
