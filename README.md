@@ -95,3 +95,24 @@ The `user_home_t` type is assigned to all labels for resources created in the ho
 so any files created in the `src` directory will have the `user_home_t` assigned, but this can be changed.
 The `ssh_home_t` is a type specific for the files hosted in the `~/.ssh/` directory. 
 
+# Week 3
+
+## Confining Accounts
+Good practice before the development of a policy is to confine accounts with users outlined in the previous sections. To check the current account's SELinux label, the command `id -Z` is used. For example, when logged in as `fedora`, my label is:
+```bash
+unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+```
+
+Despite having the SELinux users available, my account is still unconfined. This is because there is no mapping between the account and a user. There are a couple options to solve this, either create a new account with a mapping or confine regular accounts.
+
+### Create a new Account
+Creating a new account and confining it to a user can be done with the command
+```bash
+# useradd -Z <selinx_u> <example_account>
+```
+
+This will create an account called `<example_account>` which automatically maps to the `<selinx_u>`. For example, I create an account called `staff` which maps to the `staff_u` user. Now when I login using `staff`, my label becomes:
+```bash
+staff_u:staff_r:staff_t:s0
+```
+
