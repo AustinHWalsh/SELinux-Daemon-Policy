@@ -116,3 +116,21 @@ This will create an account called `<example_account>` which automatically maps 
 staff_u:staff_r:staff_t:s0
 ```
 
+### Confing Applications
+Similar to accounts, applications must be confined to a SELinux type to enable rules to be enforced on them. For example, the `/etc/passwd` application has the label:
+```bash
+system_u:object_r:passwd_file_t:s0 /etc/passwd
+```
+This means it is confined to the type `passwd_file_t`. Normally, new applications are confined to the account's home type. Seeing the label associated with a compiled `c` file called basic:
+```bash
+unconfined_u:object_r:user_home_t:s0 basic
+```
+Whilst it has an unconfined SELinux user, the current user can still run this application as long as they are able to assume the `object_r` role which can interact with the `user_home_t` type.
+
+However, lets say I created a system service and started it. As it is no longer present in the home directory (services live in the /usr/local/bin) directory, it will no longer be confined by the `user_home_t` type. Infact, it will be unconfined. For example, using a custom service called `mydaemon`, its label is:
+```bash
+system_u:system_r:unconfined_service_t:s0 root 4117    1  0 16:56 ?        00:00:00 /usr/local/bin/mydaemon
+```
+We can see it is now owned by the `system_u` user, however, it is not confined to a type. This means that the application is not enforced by any SELinux policies.
+
+
