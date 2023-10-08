@@ -1,0 +1,11 @@
+[Unit]
+Description=Append a message to a log file
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /usr/local/bin/logdaemon.py
+
+[Install]
+WantedBy=multi-user.target
