@@ -46,4 +46,3 @@ make -f /usr/share/selinux/devel/Makefile logdaemon.pp || exit
 sepolicy manpage -p . -d logdaemon_t
 # Fixing the file context on /usr/local/bin/logdaemon
 /sbin/restorecon -F -R -v /usr/local/bin/logdaemon
-

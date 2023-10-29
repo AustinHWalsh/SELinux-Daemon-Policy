@@ -29,7 +29,7 @@ ps -q $(systemctl show --property MainPID --value logdaemon) -o pid,label,comm
 The Daemon will have an unconfined type \(`unconfined_service_t`\):
 ```bash
     PID LABEL                                     COMMAND
- 136362 system_u:system_r:unconfined_service_t:s0 python3
+ 136362 system_u:system_r:unconfined_service_t:s0 logdaemon
 ```
 and log messages will be written to `/var/log/messages`
 
@@ -53,14 +53,18 @@ sudo semodule -i logdaemon.pp
 
 ### Relabel the daemon
 ```
-sudo restorecon -v /usr/local/bin/logdaemon.py /usr/lib/systemd/system
+/sbin/restorecon -F -R -v /usr/local/bin/logdaemon
 ```
 
 ## Closing
 
 Restart the service
 ```
-sudo systemctl start logdaemon
+sudo systemctl restart logdaemon
 ```
 The context will now be confined:
-
+```
+    PID LABEL                            COMMAND
+ 138166 system_u:system_r:logdaemon_t:s0 logdaemon
+```
+and no more messages will be written to the log file.
