@@ -9,7 +9,7 @@ type logdaemon_t;
 type logdaemon_exec_t;
 init_daemon_domain(logdaemon_t, logdaemon_exec_t)
 
-permissive logdaemon_t;
+# permissive logdaemon_t;
 
 ########################################
 #
