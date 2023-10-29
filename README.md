@@ -3,13 +3,13 @@
 ### Install the Daemon
 
 ```
-sudo cp logdaemon.py /usr/local/bin
+sudo cp logdaemon /usr/local/bin
 sudo cp logdaemon.service /usr/lib/systemd/system
 ```
 
 ### Starting the Daemon
 
-Ensure `systemd` and `python3` are installed and up to date.
+Ensure `systemd` are installed and up to date.
 
 Enable and start the service
 ```

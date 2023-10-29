@@ -2,7 +2,7 @@
 
 
 %define relabel_files() \
-restorecon -R /usr/local/bin/logdaemon.py; \
+restorecon -R /usr/local/bin/logdaemon; \
 
 %define selinux_policyver 38.30-1
 

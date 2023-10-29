@@ -44,9 +44,6 @@ make -f /usr/share/selinux/devel/Makefile logdaemon.pp || exit
 
 # Generate a man page of the installed module
 sepolicy manpage -p . -d logdaemon_t
-# Fixing the file context on /usr/local/bin/logdaemon.py
-/sbin/restorecon -F -R -v /usr/local/bin/logdaemon.py
-# Generate a rpm package for the newly generated policy
+# Fixing the file context on /usr/local/bin/logdaemon
+/sbin/restorecon -F -R -v /usr/local/bin/logdaemon
 
-pwd=$(pwd)
-rpmbuild --define "_sourcedir ${pwd}" --define "_specdir ${pwd}" --define "_builddir ${pwd}" --define "_srcrpmdir ${pwd}" --define "_rpmdir ${pwd}" --define "_buildrootdir ${pwd}/.build"  -ba logdaemon_selinux.spec
