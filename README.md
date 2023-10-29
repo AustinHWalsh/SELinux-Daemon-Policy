@@ -3,6 +3,7 @@
 ### Install the Daemon
 
 ```
+cd daemon
 sudo cp logdaemon /usr/local/bin
 sudo cp logdaemon.service /usr/lib/systemd/system
 ```
@@ -68,3 +69,7 @@ The context will now be confined:
  138166 system_u:system_r:logdaemon_t:s0 logdaemon
 ```
 and no more messages will be written to the log file.
+```
+sudo ausearch -m AVC -ts recent
+```
+
