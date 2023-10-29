@@ -3,7 +3,7 @@
 ### Install the Daemon
 
 ```bash
-# cp logdaemon.py /usr/local/bin
+\# cp logdaemon.py /usr/local/bin
 # cp logdaemon.service /usr/lib/systemd/system
 ```
 
