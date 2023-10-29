@@ -9,12 +9,12 @@ sudo cp logdaemon.service /usr/lib/systemd/system
 
 ### Starting the Daemon
 
-Ensure `systemd` are installed and up to date.
+Ensure `systemd` is installed and up to date.
 
 Enable and start the service
 ```
-sudo systemctl enable logdaemon.service
-sudo systemctl start logdaemon.service
+sudo systemctl enable logdaemon
+sudo systemctl start logdaemon
 ```
 
 To check the status of the service use
@@ -53,7 +53,7 @@ sudo semodule -i logdaemon.pp
 
 ### Relabel the daemon
 ```
-/sbin/restorecon -F -R -v /usr/local/bin/logdaemon
+sudo /sbin/restorecon -F -R -v /usr/local/bin/logdaemon
 ```
 
 ## Closing
