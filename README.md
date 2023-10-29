@@ -1,16 +1,24 @@
 ## Setup
 
+### Install the Daemon
+
+```bash
+# cp logdaemon.py /usr/local/bin
+# cp logdaemon.service /usr/lib/systemd/system
+```
+
 ### Starting the Daemon
 
 Ensure `systemd` and `python3` are installed and up to date.
 
-1. Enable and start the service
+Enable and start the service
 ```bash
-sudo systemctl enable logdaemon.service
-sudo systemctl start logdaemon.service
+# systemctl enable logdaemon.service
+# systemctl start logdaemon.service
 ```
 
 To check the status of the service use
 ```bash
-sudo systemctl status logdaemon
+# systemctl status logdaemon
 ```
+
