@@ -26,10 +26,11 @@ To see the SELinux label of the service use
 $ ps -q $(systemctl show --property MainPID --value logdaemon) -o pid,label,comm
 ```
 
-## Load the SELinux Policy
-
 The Daemon will have an unconfined type \(`unconfined_service_t`\):
 ```bash
     PID LABEL                                     COMMAND
  136362 system_u:system_r:unconfined_service_t:s0 python3
 ```
+
+## Load the SELinux Policy
+TODO
